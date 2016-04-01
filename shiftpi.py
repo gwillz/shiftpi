@@ -73,7 +73,7 @@ if __name__ == "__main__":
     speed = 0.1
     
     if len(sys.argv) == 1:
-        print "loop, pong, rand, police, keys"
+        print "loop, pong, rand, police, strobe, keys"
         exit(0)
     
     if len(sys.argv) > 2:
@@ -119,6 +119,14 @@ if __name__ == "__main__":
            time.sleep(speed)
            _right = right
            left, right = _right, left
+    
+    elif sys.argv[1] == "strobe":
+        
+        while True:
+           s.write(s.ALL, s.HIGH)
+           time.sleep(speed)
+           s.write(s.ALL, s.LOW)
+           time.sleep(speed)
     
     elif sys.argv[1] == "keys":
         from getch import getch

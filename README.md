@@ -5,8 +5,15 @@ ShiftPi is the easiest way to work with `74HC595` shift registers on your Raspbe
 This is a fork of Mignev's [Arduino style library](https://github.com/mignev/shiftpi), 
 which in turn was inspired by this article: [Can you move over? The 74HC595 8 bit shift register](http://bildr.org/2011/02/74hc595/)
 
+
 # How to connect Pi with `74HC595`
-![Scheme](http://i.picresize.com/images/2014/03/11/xM26G.jpg)
+
+Please note:
+* different resisters may be required for a 5V supply (~420R recommended)
+* these pins are not reflective of the default configuration, see [API Stuff](#api-stuff)
+
+![Scheme](breadboard_scheme.jpg)
+
 
 # Usage
 
@@ -28,7 +35,8 @@ s.write(7, s.LOW)
 
 That's it!
 
-# The API look and feel
+
+# API stuff
 
 ## Constants
 
@@ -40,9 +48,8 @@ That's it!
 default `SER`, `RCLK`, `SRCLK` pins are set as follow:
 
 * SER   = 27  (GPIO/BCM RPI)  #pin 14 on the 75HC595
-* RCLK  = 24  (GPIO/BCM RPI)  #pin 12 on the 75HC595
-* SRCLK = 23  (GPIO/BCM RPI)  #pin 11 on the 75HC595
-
+* RCLK  = 23  (GPIO/BCM RPI)  #pin 12 on the 75HC595
+* SRCLK = 22  (GPIO/BCM RPI)  #pin 11 on the 75HC595
 
 Different pins can be set with the init options:
 
@@ -50,7 +57,8 @@ Different pins can be set with the init options:
 s = ShiftPi(ser_pin=10, rck_pin=11, sck_pin=12, num_registers=1)
 ```
 
-#Requirements
+
+# Requirements
 
 * Raspberry Pi
 * Python 2.7+ and Python development tools
@@ -70,6 +78,7 @@ Get `shiftpi` source and install it:
 
     # sudo rm -rf shiftpi
 
+
 # Contributors
 
 - [Gwilyn Saunders](https://git.gwillz.com.au/gwillz)
@@ -77,9 +86,11 @@ Get `shiftpi` source and install it:
 - [Nathan Bookham](https://github.com/inversesandwich)
 - [Felix Breidenstein](https://github.com/f-breidenstein)
 
+
 # Useful links
 * [How Shift Registers work?](http://www.youtube.com/watch?feature=player_embedded&v=6fVbJbNPrEU#!) (Video)
 
-#Copyright
+
+# Copyright
 see [LICENSE](LICENSE)
 
