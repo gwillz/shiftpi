@@ -2,17 +2,17 @@ ShiftPi
 =======
 
 ShiftPi is the easiest way to work with `74HC595` shift registers on your Raspberry Pi. 
-This is a fork of Mignev's [Arduino style library](https://github.com/mignev/shiftpi), 
-which in turn was inspired by this article: [Can you move over? The 74HC595 8 bit shift register](http://bildr.org/2011/02/74hc595/)
+This is a fork of Mignev's [Arduino style library](https://github.com/mignev/shiftpi).
+Which in turn was inspired by this article: [Can you move over? The 74HC595 8 bit shift register](http://bildr.org/2011/02/74hc595/)
 
 
-# How to connect Pi with `74HC595`
+# How to connect a Pi to a 74HC595
 
 Please note:
-* different resisters may be required for a 5V supply (~420R recommended)
-* these pins are not reflective of the default configuration, see [API Stuff](#api-stuff)
 
-![Scheme](breadboard_scheme.jpg)
+* Resistor values are dependent on LED amps (ie. 420R for 5mA at 5V)
+
+![Scheme](wiring_bb.png)
 
 
 # Usage
@@ -40,23 +40,27 @@ That's it!
 
 ## Constants
 
-* `HIGH` # this is mode of pin
-* `LOW`  # this is mode of pin
-* `ALL`  # you can use it as pin number.
+* `HIGH` - pin on
+* `LOW`  - pin off
+* `ALL`  - all pins (instead of 0-7)
+
 
 ## Init (`s = ShiftPi()`)
-default `SER`, `RCLK`, `SRCLK` pins are set as follow:
 
-* SER   = 27  (GPIO/BCM RPI)  #pin 14 on the 75HC595
-* RCLK  = 23  (GPIO/BCM RPI)  #pin 12 on the 75HC595
-* SRCLK = 22  (GPIO/BCM RPI)  #pin 11 on the 75HC595
+Default pins mappings are as follows:
+
+| Name  | GPIO | 74HC959 |
+|-------|------|---------|
+| SER   |  27  |    14   |
+| RCLK  |  23  |    12   |
+| SRCLK |  22  |    11   |
+
 
 Different pins can be set with the init options:
 
 ```python
-s = ShiftPi(ser_pin=10, rck_pin=11, sck_pin=12, num_registers=1)
+s = ShiftPi(ser_pin=27, rck_pin=23, sck_pin=22)
 ```
-
 
 # Requirements
 
@@ -69,15 +73,17 @@ s = ShiftPi(ser_pin=10, rck_pin=11, sck_pin=12, num_registers=1)
 
 First install RPi.GPIO library and Python development tools:
 
-    # sudo apt-get update && sudo apt-get -y install python-rpi.gpio python-dev
+```sh
+sudo apt-get update && sudo apt-get -y install python-rpi.gpio python-dev
+```
 
 Get `shiftpi` source and install it:
 
-    # git clone https://git.gwillz.com.au/mk2/shiftpi.git
-    # sudo python shiftpi/setup.py install
-
-    # sudo rm -rf shiftpi
-
+```sh
+git clone https://git.gwillz.com.au/mk2/shiftpi.git
+sudo python shiftpi/setup.py install
+sudo rm -rf shiftpi
+```
 
 # Contributors
 
@@ -88,9 +94,14 @@ Get `shiftpi` source and install it:
 
 
 # Useful links
+
 * [How Shift Registers work?](http://www.youtube.com/watch?feature=player_embedded&v=6fVbJbNPrEU#!) (Video)
+* [74HC595 Datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
+* [Raspberry Pi Pinouts](https://pinout.xyz)
+* [Calculating Ohms for LEDs](https://www.sparkfun.com/tutorials/219)
 
 
 # Copyright
-see [LICENSE](LICENSE)
+
+See [LICENSE](LICENSE)
 
