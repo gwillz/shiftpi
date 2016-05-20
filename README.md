@@ -23,13 +23,21 @@ import shiftpi
 s = shiftpi.ShiftPi()
 
 # set pin-1 on
+s.write(0, True)
+# or
 s.write(0, s.HIGH)
+# or
+s.write(0, RPi.GPIO.HIGH)
+# or
+s.up(0)
 
 # set all on (or off)
-s.write(s.ALL, s.HIGH)
+s.write(s.ALL, True)
 
 # set pin-8 off
-s.write(7, s.LOW)
+s.write(7, False)
+# or
+s.down(0)
 
 ```
 
@@ -56,11 +64,12 @@ Default pins mappings are as follows:
 | SRCLK |  22  |    11   |
 
 
-Different pins can be set with the init options:
+Different pins can be set with the init options. Additional chips can be set here too.
 
 ```python
-s = ShiftPi(ser_pin=27, rck_pin=23, sck_pin=22)
+s = ShiftPi(ser_pin=27, rck_pin=23, sck_pin=22, num_registers=2)
 ```
+
 
 # Requirements
 
@@ -81,9 +90,10 @@ Get `shiftpi` source and install it:
 
 ```sh
 git clone https://git.gwillz.com.au/mk2/shiftpi.git
-sudo python shiftpi/setup.py install
-sudo rm -rf shiftpi
+cd shiftpi/
+sudo python setup.py install
 ```
+
 
 # Contributors
 
