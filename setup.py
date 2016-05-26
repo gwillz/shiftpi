@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 
 from setuptools import setup
+import os
+
+requirements = open('requirements.txt').read().split()
+for i in requirements: if 'git' in i: requirements.remove(i)
 
 def get_long_description(fname):
     try:
         import pypandoc
         return pypandoc.convert(fname, 'rst')
     except:
-        import os
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='shiftpi',
@@ -17,6 +20,7 @@ setup(name='shiftpi',
       author_email='gwilyn.saunders@mk2es.com.au',
       url='https://git.gwillz.com.au/mk2/shiftpi',
       packages=['shiftpi'],
+      install_requires=requirements,
       long_description=get_long_description('README.md'),
       classifiers=[
           'Operating System :: POSIX',
