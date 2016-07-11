@@ -1,1 +1,3 @@
-GPIO.RPi>=0.6.1
+RPi.GPIO>=0.6.1
+gslib=>0.1
+git+https://git.gwillz.com.au/gwillz/gslib.git

@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # example uses/tests
 import sys, time, random
-from getch import getch
+from gslib import getch
 from __init__ import ShiftPi
 
 if __name__ == "__main__":
