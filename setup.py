@@ -3,10 +3,7 @@
 from setuptools import setup
 import os
 
-requirements = open('requirements.txt').read().split()
-for i in requirements:
-    if 'git' in i:
-        requirements.remove(i)
+requirements = [i for i in open('requirements.txt').read().split() if 'git' not in i]
 
 def get_long_description(fname):
     try:
@@ -16,7 +13,7 @@ def get_long_description(fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='shiftpi',
-      version="0.3.1",
+      version="0.3.2",
       description="ShiftPi is the easiest way to work with 74HC595 shift registers on your Raspberry Pi.",
       author='Gwilyn Saunders',
       author_email='gwilyn.saunders@mk2es.com.au',

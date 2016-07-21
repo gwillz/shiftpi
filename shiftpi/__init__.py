@@ -1,6 +1,8 @@
 #!/usr/bin/env python2
 import RPi.GPIO as GPIO
 
+# pragma pylint: disable=bad-whitespace
+
 class ShiftPi(object):
     # define modes
     ALL  = -1
@@ -9,7 +11,7 @@ class ShiftPi(object):
     
     # is used to store states of all pins
     _registers = []
-
+    
     def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=23):
         self._SER_pin   = ser_pin
         self._RCLK_pin  = rck_pin
@@ -53,13 +55,13 @@ class ShiftPi(object):
             self._setPin(pin, mode)
         if execute:
             self._execute()
-
+            
     def _setPin(self, pin, mode):
         try:
             self._registers[pin] = mode
         except IndexError:
             self._registers.insert(pin, mode)
-
+            
     def _execute(self):
         GPIO.output(self._RCLK_pin, GPIO.LOW)
         
@@ -70,6 +72,6 @@ class ShiftPi(object):
             
             GPIO.output(self._SER_pin, pin_mode)
             GPIO.output(self._SRCLK_pin, GPIO.HIGH)
-
+            
         GPIO.output(self._RCLK_pin, GPIO.HIGH)
-
+        

@@ -2,7 +2,7 @@
 # example uses/tests
 import sys, time, random
 from gslib import getch
-from __init__ import ShiftPi
+from shiftpi import ShiftPi
 
 if __name__ == "__main__":
     s = ShiftPi()
