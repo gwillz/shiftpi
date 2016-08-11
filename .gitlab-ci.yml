@@ -2,8 +2,8 @@
 before_script:
  - wget https://git.gwillz.com.au/snippets/8/raw -O mk2pylint.cfg -q
  - wget https://git.gwillz.com.au/snippets/9/raw -O doc-style.css -q
- - pip install pylint epydoc docutils -q
- - pip install -r requirements.txt -q
+ - pip install pylint epydoc docutils --user -q
+ - pip install -r requirements.txt --user -q
  
 build:
  type: build
