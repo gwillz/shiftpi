@@ -1,4 +1,8 @@
 *.pyc
+*.log
 dist/
 build/
+html/
 *.egg-info
+mk2pylint.cfg
+doc-style.css

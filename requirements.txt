@@ -1,3 +1,2 @@
 RPi.GPIO>=0.6.1
-gslib=>0.1.6
-git+https://git.gwillz.com.au/gwillz/gslib.git
+git+ssh://git@git.gwillz.com.au/gwillz/gslib.git#gslib=>0.1.6

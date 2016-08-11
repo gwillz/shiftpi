@@ -1,0 +1,37 @@
+
+before_script:
+ - wget https://git.gwillz.com.au/snippets/8/raw -O mk2pylint.cfg -q
+ - wget https://git.gwillz.com.au/snippets/9/raw -O doc-style.css -q
+ - pip install pylint epydoc docutils -q
+ - pip install -r requirements.txt -q
+ 
+build:
+ type: build
+ tags:
+ - python
+ - linux
+ - raspberrypi
+ script:
+ - python setup.py build
+ - python setup.py install --user
+
+deploy-api:
+ type: build
+ tags:
+ - python
+ - mk2-docs
+ allow_failure: true
+ script:
+ - >-
+   epydoc --no-sourcecode --no-frames --output html --simple-term -vv
+   --inheritance grouped --css doc-style.css --name 'ShiftPi' shiftpi
+ - cp html/ -r /srv/api/shiftpi
+ 
+lint:
+ type: test
+ tags:
+ - python
+ - linux
+ - raspberrypi
+ script:
+ - pylint --rcfile=mk2pylint.cfg shiftpi --reports=no || [[ $(($? & 3)) == 0 ]]
