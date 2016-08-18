@@ -12,7 +12,7 @@ class ShiftPi(object):
     # is used to store states of all pins
     _registers = []
     
-    def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=23):
+    def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=24):
         self._SER_pin   = ser_pin
         self._RCLK_pin  = rck_pin
         self._SRCLK_pin = sck_pin

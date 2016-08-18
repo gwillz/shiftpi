@@ -1,7 +1,7 @@
 ShiftPi
 =======
 
-ShiftPi is the easiest way to work with `74HC595` shift registers on your Raspberry Pi. 
+ShiftPi is the easiest way to work with `74HC595` shift registers on your Raspberry Pi.
 This is a fork of Mignev's [Arduino style library](https://github.com/mignev/shiftpi).
 Which in turn was inspired by this article: [Can you move over? The 74HC595 8 bit shift register](http://bildr.org/2011/02/74hc595/)
 
@@ -60,14 +60,14 @@ Default pins mappings are as follows:
 | Name  | GPIO | 74HC959 |
 |-------|------|---------|
 | SER   |  27  |    14   |
-| RCLK  |  23  |    12   |
+| RCLK  |  24  |    12   |
 | SRCLK |  22  |    11   |
 
 
 Different pins can be set with the init options. Additional chips can be set here too.
 
 ```python
-s = ShiftPi(ser_pin=27, rck_pin=23, sck_pin=22, num_registers=2)
+s = ShiftPi(ser_pin=27, rck_pin=24, sck_pin=22, num_registers=2)
 ```
 
 
@@ -98,7 +98,7 @@ sudo python setup.py install
 # Contributors
 
 - [Gwilyn Saunders](https://git.gwillz.com.au/gwillz)
-- [Marian Ignev](https://github.com/mignev) 
+- [Marian Ignev](https://github.com/mignev)
 - [Nathan Bookham](https://github.com/inversesandwich)
 - [Felix Breidenstein](https://github.com/f-breidenstein)
 
@@ -114,4 +114,3 @@ sudo python setup.py install
 # Copyright
 
 See [LICENSE](LICENSE)
-
