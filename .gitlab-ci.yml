@@ -25,7 +25,7 @@ deploy-api:
  - >-
    epydoc --no-sourcecode --no-frames --output html --simple-term -vv
    --inheritance grouped --css doc-style.css --name 'ShiftPi' shiftpi
- - cp html/ -r /srv/api/shiftpi
+ - cp html/* -r /srv/api/shiftpi
  
 lint:
  type: test
@@ -34,4 +34,4 @@ lint:
  - linux
  - raspberrypi
  script:
- - pylint --rcfile=mk2pylint.cfg shiftpi --reports=no || [[ $(($? & 3)) == 0 ]]
+ - pylint --rcfile=mk2pylint.cfg shiftpi --reports=no --disable=fixme || [[ $(($? & 3)) == 0 ]]
