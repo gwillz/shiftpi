@@ -10,12 +10,14 @@ requirements:
  tags:
  - python2
  - linux
- - raspberypi
+ - raspberrypi
  script:
  - python2 -m pip install -r requirements.txt --user
 
 epydoc:
  type: docs
+ only:
+ - master
  artifacts:
   paths:
   - html/
@@ -32,6 +34,8 @@ epydoc:
 
 pypi:
  type: build
+ only:
+ - master
  artifacts:
   paths:
   - dist/
