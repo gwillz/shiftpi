@@ -1,2 +1,3 @@
+--extra-index-url=https://pip.mk2es.com/simple
 RPi.GPIO>=0.6.1
-git+ssh://git@git.gwillz.com.au/gwillz/gslib.git#gslib=>0.1.6
+gslib>=0.1.11

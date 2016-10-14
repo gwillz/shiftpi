@@ -1,37 +1,69 @@
+stages:
+ - pre-build
+ - test
+ - docs
+ - build
+ - deploy
 
-before_script:
- - wget https://git.gwillz.com.au/snippets/8/raw -O mk2pylint.cfg -q
- - wget https://git.gwillz.com.au/snippets/9/raw -O doc-style.css -q
- - pip install pylint epydoc docutils --user -q
- - pip install -r requirements.txt --user -q
- 
-build:
- type: build
+requirements:
+ type: pre-build
  tags:
- - python
+ - python2
+ - linux
+ - raspberypi
+ script:
+ - python2 -m pip install -r requirements.txt --user
+
+epydoc:
+ type: docs
+ artifacts:
+  paths:
+  - html/
+ tags:
+ - python2
  - linux
  - raspberrypi
  script:
- - python setup.py build
- - python setup.py install --user
-
-deploy-api:
- type: build
- tags:
- - python
- - mk2-docs
- allow_failure: true
- script:
+ - wget https://git.gwillz.com.au/snippets/9/raw -O doc-style.css -q
+ - python2 -m pip install pylint epydoc docutils --user -q
  - >-
    epydoc --no-sourcecode --no-frames --output html --simple-term -vv
    --inheritance grouped --css doc-style.css --name 'ShiftPi' shiftpi
- - cp html/* -r /srv/api/shiftpi
- 
-lint:
- type: test
+
+pypi:
+ type: build
+ artifacts:
+  paths:
+  - dist/
  tags:
- - python
+ - python2
  - linux
  - raspberrypi
  script:
+ - python2 setup.py bdist_wheel
+
+deploy:
+ type: deploy
+ only:
+ - master
+ dependencies:
+ - epydoc
+ - pypi
+ tags:
+ - linux
+ - mk2-docs
+ script:
+ - '[ -e /srv/api/shiftpi ] || mkdir /srv/api/shiftpi'
+ - '[ -e /srv/pypi/packages/shiftpi ] || mkdir /srv/pypi/packages/shiftpi'
+ - cp html/* -r /srv/api/shiftpi
+ - cp dist/*.whl /srv/pypi/packages/shiftpi
+
+lint:
+ type: test
+ tags:
+ - python2
+ - linux
+ - raspberrypi
+ script:
+ - wget https://git.gwillz.com.au/snippets/8/raw -O mk2pylint.cfg -q
  - pylint --rcfile=mk2pylint.cfg shiftpi --reports=no --disable=fixme || [[ $(($? & 3)) == 0 ]]
