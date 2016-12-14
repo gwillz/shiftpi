@@ -1,55 +1,47 @@
 stages:
- - pre-build
- - test
  - docs
+ - test
  - build
  - deploy
 
-requirements:
- type: pre-build
- tags:
- - python2
- - linux
- - raspberrypi
- script:
- - python2 -m pip install -r requirements.txt --user
-
 epydoc:
- type: docs
+ stage: docs
  only:
  - master
+ - tag
  artifacts:
   paths:
   - html/
  tags:
- - python2
+ - python3
  - linux
  - raspberrypi
  script:
  - wget https://git.gwillz.com.au/snippets/9/raw -O doc-style.css -q
- - python2 -m pip install pylint epydoc docutils --user -q
  - >-
    epydoc --no-sourcecode --no-frames --output html --simple-term -vv
    --inheritance grouped --css doc-style.css --name 'ShiftPi' shiftpi
 
 pypi:
- type: build
+ stage: build
  only:
  - master
+ - tag
  artifacts:
   paths:
   - dist/
  tags:
- - python2
+ - python3
  - linux
  - raspberrypi
  script:
- - python2 setup.py bdist_wheel
+ - python3 setup.py bdist_wheel --universal
 
 deploy:
- type: deploy
+ stage: deploy
  only:
  - master
+ - tag
  dependencies:
  - epydoc
  - pypi
@@ -63,11 +55,11 @@ deploy:
  - cp dist/*.whl /srv/pypi/packages/shiftpi
 
 lint:
- type: test
+ stage: test
  tags:
- - python2
+ - python3
  - linux
  - raspberrypi
  script:
  - wget https://git.gwillz.com.au/snippets/8/raw -O mk2pylint.cfg -q
- - pylint --rcfile=mk2pylint.cfg shiftpi --reports=no --disable=fixme || [[ $(($? & 3)) == 0 ]]
+ - 'python3 -m pylint --rcfile=mk2pylint.cfg shiftpi --reports=no || [[ $(($? & 3)) == 0 ]]'
