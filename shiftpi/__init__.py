@@ -1,22 +1,22 @@
-#!/usr/bin/env python2
 import RPi.GPIO as GPIO
 
 # pragma pylint: disable=bad-whitespace
 
 class ShiftPi(object):
+    """TODO DOCS"""
+    
     # define modes
     ALL  = -1
     HIGH = GPIO.HIGH
     LOW  = GPIO.LOW
-    
-    # is used to store states of all pins
-    _registers = []
     
     def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=24):
         self._SER_pin   = ser_pin
         self._RCLK_pin  = rck_pin
         self._SRCLK_pin = sck_pin
         self._REG_num   = num_registers
+        
+        self._registers = [] #: used to store states of all pins
         
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -25,6 +25,8 @@ class ShiftPi(object):
         GPIO.setup(self._SRCLK_pin, GPIO.OUT)
     
     def write(self, pin, mode):
+        """TODO DOCS"""
+        
         # accept bool types
         if isinstance(mode, bool):
             mode = self.HIGH if mode else self.LOW
@@ -41,28 +43,37 @@ class ShiftPi(object):
     
     # shorthand for write()
     def up(self, pin):
+        """TODO DOCS"""
         self.write(pin, self.HIGH)
     
     def down(self, pin):
+        """TODO DOCS"""
         self.write(pin, self.LOW)
     
     # internal methods for stuff
     def _all_pins(self):
+        """TODO DOCS"""
         return self._REG_num * 8
     
     def _all(self, mode, execute=True):
+        """TODO DOCS"""
+        
         for pin in range(0, self._all_pins()):
             self._setPin(pin, mode)
         if execute:
             self._execute()
             
     def _setPin(self, pin, mode):
+        """TODO DOCS"""
+        
         try:
             self._registers[pin] = mode
         except IndexError:
             self._registers.insert(pin, mode)
             
     def _execute(self):
+        """TODO DOCS"""
+        
         GPIO.output(self._RCLK_pin, GPIO.LOW)
         
         for pin in range(self._all_pins()-1, -1, -1):

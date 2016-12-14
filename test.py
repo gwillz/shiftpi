@@ -1,5 +1,5 @@
-#!/usr/bin/env python2
 # example uses/tests
+from __future__ import print_function
 import sys, time, random
 from gslib import getch
 from shiftpi import ShiftPi
