@@ -18,31 +18,31 @@ if __name__ == "__main__":
     if sys.argv[1] == "loop":
         while True:
             for i in range(0,8):
-                s.write(7 if i==0 else i-1, s.LOW)
-                s.write(i, s.HIGH)
+                s.write(7 if i==0 else i-1, False)
+                s.write(i, True)
                 time.sleep(speed)
     
     elif sys.argv[1] == "pong":
         while True:
             for i in range(0,8):
-                s.write(7 if i==0 else i-1, s.LOW)
-                s.write(i, s.HIGH)
+                s.write(7 if i==0 else i-1, False)
+                s.write(i, True)
                 time.sleep(speed)
             
             for i in reversed(range(1,7)):
-                s.write(i+1, s.LOW)
-                s.write(i, s.HIGH)
+                s.write(i+1, False)
+                s.write(i, True)
                 time.sleep(speed)
     
     elif sys.argv[1] == "rand":
         
         while True:
-            s.write(s.ALL, s.LOW)
-            s.write(random.randint(0,7), s.HIGH)
+            s.write(-1, False)
+            s.write(random.randint(0,7), True)
             time.sleep(speed)
     
     elif sys.argv[1] == "police":
-       left, right = s.HIGH, s.LOW
+       left, right = True, False
        
        while True:
            for i in range(0,8):
@@ -58,16 +58,16 @@ if __name__ == "__main__":
     elif sys.argv[1] == "strobe":
         
         while True:
-           s.write(s.ALL, s.HIGH)
+           s.write(-1, True)
            time.sleep(speed)
-           s.write(s.ALL, s.LOW)
+           s.write(-1, False)
            time.sleep(speed)
     
     elif sys.argv[1] == "keys":
         print("press ESC to quit")
         
         up = [False, False, False, False, False, False, False, False]
-        s.write(s.ALL, s.LOW)
+        s.write(-1, False)
         
         while True:
             c = getch()
@@ -76,8 +76,8 @@ if __name__ == "__main__":
             try:
                 i = int(c)-1
                 if i in range(0,8):
-                    if up[i]: s.write(i, s.LOW)
-                    else: s.write(i, s.HIGH)
+                    if up[i]: s.write(i, False)
+                    else: s.write(i, True)
                     
                     up[i] = not up[i]
                 

@@ -1,3 +1,2 @@
 --extra-index-url=https://pip.mk2es.com/simple
-RPi.GPIO>=0.6.1
-gslib>=0.1.11
+pygpio>=0.2

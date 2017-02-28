@@ -1,14 +1,15 @@
-import RPi.GPIO as GPIO
+from pygpio import Gpio, modes, backends
+BACKEND = backends.NativeBackend
+
+try:
+    BACKEND = backends.RpiBackend
+except (AttributeError, ImportError):
+    pass
 
 # pragma pylint: disable=bad-whitespace
 
 class ShiftPi(object):
     """TODO DOCS"""
-    
-    # define modes
-    ALL  = -1
-    HIGH = GPIO.HIGH
-    LOW  = GPIO.LOW
     
     def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=24):
         self._SER_pin   = ser_pin
@@ -18,25 +19,20 @@ class ShiftPi(object):
         
         self._registers = [] #: used to store states of all pins
         
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(self._SER_pin,   GPIO.OUT)
-        GPIO.setup(self._RCLK_pin,  GPIO.OUT)
-        GPIO.setup(self._SRCLK_pin, GPIO.OUT)
+        self._gpio = Gpio(BACKEND)
+        self._gpio.setup([self._SER_pin,
+                          self._RCLK_pin,
+                          self._SRCLK_pin], modes.OUT)
     
     def write(self, pin, mode):
         """TODO DOCS"""
         
-        # accept bool types
-        if isinstance(mode, bool):
-            mode = self.HIGH if mode else self.LOW
-        
-        if pin == self.ALL:
+        if pin < 0:
             self._all(mode, execute=False)
         else:
             # set all pins low on first write
             if len(self._registers) == 0:
-                self._all(self.LOW, execute=False)
+                self._all(False, execute=False)
             self._setPin(pin, mode)
         
         self._execute()
@@ -44,11 +40,11 @@ class ShiftPi(object):
     # shorthand for write()
     def up(self, pin):
         """TODO DOCS"""
-        self.write(pin, self.HIGH)
+        self.write(pin, True)
     
     def down(self, pin):
         """TODO DOCS"""
-        self.write(pin, self.LOW)
+        self.write(pin, False)
     
     # internal methods for stuff
     def _all_pins(self):
@@ -74,15 +70,15 @@ class ShiftPi(object):
     def _execute(self):
         """TODO DOCS"""
         
-        GPIO.output(self._RCLK_pin, GPIO.LOW)
+        self._gpio.write(self._RCLK_pin, False)
         
         for pin in range(self._all_pins()-1, -1, -1):
-            GPIO.output(self._SRCLK_pin, GPIO.LOW)
+            self._gpio.write(self._SRCLK_pin, False)
             
             pin_mode = self._registers[pin]
             
-            GPIO.output(self._SER_pin, pin_mode)
-            GPIO.output(self._SRCLK_pin, GPIO.HIGH)
+            self._gpio.write(self._SER_pin, pin_mode)
+            self._gpio.write(self._SRCLK_pin, True)
             
-        GPIO.output(self._RCLK_pin, GPIO.HIGH)
+        self._gpio.write(self._RCLK_pin, True)
         
