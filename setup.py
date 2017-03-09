@@ -13,7 +13,7 @@ def get_long_description(fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='shiftpi',
-      version="0.4.5",
+      version="0.4.6",
       description="ShiftPi is the easiest way to work with 74HC595 shift registers on your Raspberry Pi.",
       author='Gwilyn Saunders',
       author_email='gwilyn.saunders@mk2es.com.au',

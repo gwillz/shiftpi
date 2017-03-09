@@ -1,17 +1,17 @@
 from pygpio import Gpio, modes, backends
 BACKEND = backends.NativeBackend
 
-try:
-    BACKEND = backends.RpiBackend
-except (AttributeError, ImportError):
-    pass
-
 # pragma pylint: disable=bad-whitespace
 
 class ShiftPi(object):
     """TODO DOCS"""
     
-    def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=24):
+    try:
+        BACKEND = backends.RpiBackend
+    except (AttributeError, ImportError):
+        BACKEND = backends.NativeBackend
+    
+    def __init__(self, num_registers=1, ser_pin=27, sck_pin=22, rck_pin=24, gpio=None):
         self._SER_pin   = ser_pin
         self._RCLK_pin  = rck_pin
         self._SRCLK_pin = sck_pin
@@ -19,7 +19,7 @@ class ShiftPi(object):
         
         self._registers = [] #: used to store states of all pins
         
-        self._gpio = Gpio(BACKEND)
+        self._gpio = gpio or Gpio(backend=self.BACKEND)
         self._gpio.setup([self._SER_pin,
                           self._RCLK_pin,
                           self._SRCLK_pin], modes.OUT)
