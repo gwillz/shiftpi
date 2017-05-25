@@ -1,5 +1,6 @@
 stages:
  - docs
+ - pre-build
  - test
  - build
  - deploy
@@ -21,6 +22,15 @@ epydoc:
  - >-
    epydoc --no-sourcecode --no-frames --output html --simple-term -vv
    --inheritance grouped --css doc-style.css --name 'ShiftPi' shiftpi
+
+requirements:
+ stage: pre-build
+ tags:
+ - python3
+ - linux
+ - raspberrypi
+ script:
+ - pip3 install -r requirements.txt --user
 
 pypi:
  stage: build

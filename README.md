@@ -1,18 +1,19 @@
 ShiftPi
 =======
 
+![build status](https://git.mk2es.com.au/mk2/shiftpi/badges/master/build.svg)
+![coverage report](https://git.mk2es.com.au/mk2/shiftpi/badges/master/coverage.svg)
+
 ShiftPi is the easiest way to work with `74HC595` shift registers on your Raspberry Pi.
 This is a fork of Mignev's [Arduino style library](https://github.com/mignev/shiftpi).
 Which in turn was inspired by this article: [Can you move over? The 74HC595 8 bit shift register](http://bildr.org/2011/02/74hc595/)
 
 
-# How to connect a Pi to a 74HC595
 
-Please note:
-
-* Resistor values are dependent on LED amps (ie. 420R for 5mA at 5V)
+# How to connect a Pi to a `74HC595`
 
 ![Scheme](wiring_bb.png)
+
 
 
 # Usage
@@ -27,8 +28,6 @@ s.write(0, True)
 # or
 s.write(0, s.HIGH)
 # or
-s.write(0, RPi.GPIO.HIGH)
-# or
 s.up(0)
 
 # set all on (or off)
@@ -41,7 +40,6 @@ s.down(0)
 
 ```
 
-That's it!
 
 
 # API stuff
@@ -71,36 +69,36 @@ s = ShiftPi(ser_pin=27, rck_pin=24, sck_pin=22, num_registers=2)
 ```
 
 
+
 # Requirements
 
 * Raspberry Pi
-* Python 2.7+ and Python development tools
-* RPi.GPIO (latest version recommended)
+* Python 2.7+
+
 
 
 # Installation
 
-First install RPi.GPIO library and Python development tools:
-
-```sh
-sudo apt-get update && sudo apt-get -y install python-rpi.gpio python-dev
-```
+ShiftPi uses PyGPIO to expose multiple backends. By default it uses a native
+interface to the linux GPIO driver. It can also utilise RPi.GPIO or WiringPi.
 
 Get `shiftpi` source and install it:
 
 ```sh
-git clone https://git.gwillz.com.au/mk2/shiftpi.git
+git clone https://git.mk2es.com.au/mk2/shiftpi.git
 cd shiftpi/
 sudo python setup.py install
 ```
 
 
+
 # Contributors
 
-- [Gwilyn Saunders](https://git.gwillz.com.au/gwillz)
+- [Gwilyn Saunders](https://git.mk2es.com.au/gwillz)
 - [Marian Ignev](https://github.com/mignev)
 - [Nathan Bookham](https://github.com/inversesandwich)
 - [Felix Breidenstein](https://github.com/f-breidenstein)
+
 
 
 # Useful links
@@ -109,6 +107,7 @@ sudo python setup.py install
 * [74HC595 Datasheet](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf)
 * [Raspberry Pi Pinouts](https://pinout.xyz)
 * [Calculating Ohms for LEDs](https://www.sparkfun.com/tutorials/219)
+
 
 
 # Copyright
